@@ -1,20 +1,94 @@
 #include "pch.h"
 #include <iostream>
+#include<thread>
+#include <list>
 #include <SFML/Graphics.hpp>
+
+enum Direcao
+{
+	ESQUERDA, BAIXO, DIREITA, CIMA
+};
+
+bool colisao(std::list<sf::Sprite*> *Images, sf::Sprite *Image, Direcao dir) {
+	switch (dir)
+	{
+	case ESQUERDA:
+		break;
+	case BAIXO:
+		break;
+	case DIREITA:
+		break;
+	case CIMA:
+		break;
+	default:
+		break;
+	}
+	return false;
+}
+
+void MovePlayers(sf::Time *time, sf::Sprite* Image1, sf::Sprite* Image2, std::list<sf::Sprite*> *Images, int pspd, sf::RenderWindow *window) {
+
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) && !colisao(Images, Images->front(), ESQUERDA))
+		if (Images->front()->getPosition().x > -20) Images->front()->move(-1 * pspd * time->asSeconds(), 0);
+
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D) && !colisao(Images, Images->front(), DIREITA))
+		if (Images->front()->getPosition().x + Images->front()->getGlobalBounds().width < window->getSize().x + 20) Images->front()->move(1 * pspd*time->asSeconds(), 0);
+
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::S) && !colisao(Images, Images->front(),  BAIXO))
+		if (Images->front()->getPosition().y + Images->front()->getGlobalBounds().height < window->getSize().y) Images->front()->move(0, 1 * pspd*time->asSeconds());
+
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W) && !colisao(Images, Images->front(),  CIMA))
+		if (Images->front()->getPosition().y > 0)Images->front()->move(0, -1 * pspd*time->asSeconds());
+
+
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
+		if (Images->back()->getPosition().x > -20) Images->back()->move(-1 * pspd * time->asSeconds(), 0);
+
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
+		if (Images->back()->getPosition().x + Images->back()->getGlobalBounds().width < window->getSize().x + 20) Images->back()->move(1 * pspd*time->asSeconds(), 0);
+
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
+		if (Images->back()->getPosition().y + Images->back()->getGlobalBounds().height < window->getSize().y) Images->back()->move(0, 1 * pspd*time->asSeconds());
+
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
+		if (Images->back()->getPosition().y > 0)Images->back()->move(0, -1 * pspd*time->asSeconds());
+}
+
 
 int main()
 {
-	int framecount = 0;
 	sf::RenderWindow window(sf::VideoMode(800, 600), "SFML Game");
+
+	int framecount = 0;
 	sf::Event Event;
 	sf::Time Time;
 	sf::Clock Clock;
 	sf::Texture pTexture;
-	sf::Sprite pImage;
 	sf::Vector2i move(0,0);
-	if (!pTexture.loadFromFile("sprite/bman.png"))
-		std::cout << "error loading sprite" << std::endl;
-	pImage.setTexture(pTexture);
+	
+	Clock.restart();
+	if (Clock.restart().asMicroseconds() == 1000000000) return 0;
+	if (Clock.restart().asMicroseconds() == 1000000000) return 0;
+	if (Clock.restart().asMicroseconds() == 1000000000) return 0;
+	if (Clock.restart().asMicroseconds() == 1000000000) return 0;
+	if (Clock.restart().asMicroseconds() == 1000000000) return 0;
+	std::cout << Clock.restart().asMicroseconds() << std::endl;
+
+	sf::Sprite *p1Image, *p2Image;
+	std::list<sf::Sprite*> *pImages;
+	pImages = new std::list<sf::Sprite*>;
+
+	p1Image = new sf::Sprite(pTexture);
+	p2Image = new sf::Sprite(pTexture);
+	p2Image->setPosition(window.getSize().x - p2Image->getGlobalBounds().width, window.getSize().y - p2Image->getGlobalBounds().height);
+
+	if (!pTexture.loadFromFile("texture/bman.png"))
+		std::cout << "error loading texture" << std::endl;
+
+	pImages->push_back(p1Image);
+	pImages->push_back(p2Image);
+
+
 	Time = Clock.restart();
 	while (window.isOpen()) {
 		while (window.pollEvent(Event)) {
@@ -34,21 +108,19 @@ int main()
 				break;
 			}
 		}
-		if (Clock.getElapsedTime().asMilliseconds() %17 == 0) {
-			if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
-				if(pImage.getPosition().x >-20) pImage.move(-1, 0);
-			if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
-				if (pImage.getPosition().y + pImage.getGlobalBounds().height < window.getSize().y) pImage.move(0, 1);
-			if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
-				if (pImage.getPosition().x + pImage.getGlobalBounds().width < window.getSize().x+20) pImage.move(1, 0);
-			if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
-				if (pImage.getPosition().y > 0)pImage.move(0, -1);
-		}
+		
+
+		int pspd = 150;
+
+
+
+		sf::Time timer = Clock.restart();
+		MovePlayers(&timer, p1Image, p2Image, pImages, 150, &window);
 
 
 		window.clear();
-		window.draw(pImage);
+		window.draw(*pImages->front());
+		window.draw(*pImages->back());
 		window.display();
-		//std::cout << Clock.getElapsedTime().asMicroseconds()<<std::endl;
 	}
 }
