@@ -129,38 +129,39 @@ double Body::GetAnimationSpeed()
 
 bool Body::IsColiding(Body *body)
 {
-	float thistop = this->GetRectangle().top, thisleft = this->GetRectangle().left, 
-		thisright = this->GetRectangle().left + this->GetRectangle().width, 
-		thisbottom = this->GetRectangle().top + this->GetRectangle().height,
-		bodytop = body->GetRectangle().top, bodyleft = body->GetRectangle().left,
-		bodyright = body->GetRectangle().left + body->GetRectangle().width,
-		bodybottom = body->GetRectangle().top + body->GetRectangle().height;
+	float thistop = this->GetSprite().getPosition().y, thisleft = this->GetSprite().getPosition().x,
+		thisright = this->GetSprite().getPosition().x + this->GetSprite().getLocalBounds().width,
+		thisbottom = this->GetSprite().getPosition().y + this->GetSprite().getGlobalBounds().height,
+		bodytop = body->GetSprite().getPosition().y, bodyleft = body->GetSprite().getPosition().x,
+		bodyright = body->GetSprite().getPosition().x + body->GetSprite().getGlobalBounds().width,
+		bodybottom = body->GetSprite().getPosition().y + body->GetSprite().getGlobalBounds().height;
 
-	if ((thistop > bodytop && thistop < bodybottom) || (thisbottom < bodytop && thisbottom > bodybottom)) {
-		if (thisright + 1 >= bodyleft && thisleft < bodyleft)
+	if ((thistop < bodytop && thisbottom > bodytop) || (thisbottom > bodybottom && thistop < bodybottom)) {
+ 		if (thisright + 1 >= bodyleft && thisleft < bodyleft)
 			this->Colision.RIGHT = true;
 		else
 			this->Colision.RIGHT = false;
-
-		if (thisleft - 1 >= bodyright && thisright < bodyright)
+		if (thisleft - 1 <= bodyright && thisright > bodyright)
 			this->Colision.LEFT = true;
 		else
 			this->Colision.LEFT = false;
 	}
 
-	if ((thisleft > bodyleft && thisleft < bodyright) || (thisright > bodyleft && thisright < bodyright)) {
+	if ((thisleft < bodyleft && thisright > bodyleft) || (thisright > bodyright && thisleft < bodyright)) {
 		if (thisbottom + 1 >= bodytop && thistop < bodytop)
 			this->Colision.BOTTOM = true;
 		else
 			this->Colision.BOTTOM = false;
-
-		if (thistop - 1 <= bodybottom && thisbottom < bodybottom)
+		if (thistop - 1 <= bodybottom && thisbottom > bodybottom)
 			this->Colision.TOP = true;
 		else
 			this->Colision.TOP = false;
 	}
 
-	return this->GetRectangle().intersects(body->GetRectangle());
+
+	if (this->GetSprite().getGlobalBounds().intersects(body->GetSprite().getGlobalBounds()))
+		return true;
+	else return false;
 }
 
 bool Body::IsExploding()

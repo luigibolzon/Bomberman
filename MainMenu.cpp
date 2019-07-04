@@ -65,7 +65,6 @@ void MainMenu::StartGame()
 		}
 		Window->display();
 		Scene->UpdateScreen(Window);
-
 	}
 }
 

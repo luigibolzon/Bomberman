@@ -20,6 +20,15 @@ Char::~Char()
 {
 }
 
+void Char::SetMovKeys(std::vector<sf::Keyboard::Key> keys)
+{
+	this->MovementKeys.up = keys[0];
+	this->MovementKeys.down = keys[1];
+	this->MovementKeys.left = keys[2];
+	this->MovementKeys.right = keys[3];
+	this->MovementKeys.plant = keys[4];
+}
+
 void Char::SetRange(int range)
 {
 	this->Range = range;
@@ -108,4 +117,17 @@ void Char::SetScore(int score)
 int Char::GetScore()
 {
 	return this->Score;
+}
+
+void Char::Walk()
+{
+	sf::Time Time = MovementClock.restart();
+	if (sf::Keyboard::isKeyPressed(this->MovementKeys.up) && !this->Colision.TOP)
+		this->Move(sf::Vector2f(0,-MovementSpeed*Time.asSeconds()));
+	if (sf::Keyboard::isKeyPressed(this->MovementKeys.down) && !this->Colision.BOTTOM)
+		this->Move(sf::Vector2f(0, MovementSpeed * Time.asSeconds()));
+	if (sf::Keyboard::isKeyPressed(this->MovementKeys.left) && !this->Colision.LEFT)
+		this->Move(sf::Vector2f(-MovementSpeed * Time.asSeconds(),0));
+	if (sf::Keyboard::isKeyPressed(this->MovementKeys.right) && !this->Colision.RIGHT)
+		this->Move(sf::Vector2f(MovementSpeed * Time.asSeconds(),0));
 }

@@ -3,10 +3,21 @@
 
 class Char:public Body
 {
+private:
+	sf::Clock MovementClock;
+	double MovementSpeed = 20;
+	int Range, BombQt, Kill, Death, Suicide, Score;
+	double Speed;
+	bool Intangible, Invulnerable;
 public:
+	struct MovKeys
+	{
+		sf::Keyboard::Key up, down, left, right, plant;
+	}MovementKeys;
 	Char(std::string, sf::Texture*, sf::Vector2i, sf::Vector2i, sf::Vector2f);
 	Char(sf::Texture*, sf::Vector2i, sf::Vector2i, sf::Vector2f);
 	~Char();
+	void SetMovKeys(std::vector<sf::Keyboard::Key>);
 	void SetRange(int);
 	int GetRange();
 	void SetBombQt(int);
@@ -25,9 +36,5 @@ public:
 	int GetSuicide();
 	void SetScore(int);
 	int GetScore();
-
-private:
-	int Range, BombQt, Kill, Death, Suicide, Score;
-	double Speed;
-	bool Intangible, Invulnerable;
+	void Walk();
 };

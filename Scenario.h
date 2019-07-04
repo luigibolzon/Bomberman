@@ -30,6 +30,7 @@ public:
 	void GenBlocks();
 	void GenPlayer();
 	void UpdateScreen(sf::RenderWindow*);
+	void CheckColisions();
 	~Scenario();
 	//Block, Bomb, Char(player), Char(Mob), Explosion;
 	void SetTextures(std::string, std::string, std::string, std::string, std::string);

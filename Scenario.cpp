@@ -35,6 +35,7 @@ Scenario::Scenario(std::vector<std::string> textures)
 void Scenario::DrawChar(sf::RenderWindow * screen)
 {
 	for (Char* Char : *Player) {
+		Char->Walk();
 		screen->draw(Char->GetSprite());
 	}
 }
@@ -77,6 +78,7 @@ void Scenario::GenPlayer()
 {
 	Player = new std::list<Char*>();
 	Player->push_back(new Char(" Player" , Textures[2], sf::Vector2i(7,5), sf::Vector2i(2,2), sf::Vector2f(0,0)));
+	Player->back()->SetMovKeys({sf::Keyboard::Key::W,sf::Keyboard::Key::S, sf::Keyboard::Key::A, sf::Keyboard::Key::D, sf::Keyboard::Key::Space});
 }
 
 void Scenario::UpdateScreen(sf::RenderWindow* screen)
@@ -85,9 +87,20 @@ void Scenario::UpdateScreen(sf::RenderWindow* screen)
 	view.zoom(0.69f);
 	view.setCenter(this->GetBase().getSize().x / 2, this->GetBase().getSize().y / 2);
 	screen->setView(view);
+	CheckColisions();
 	DrawBlocks(screen);
 	DrawChar(screen);
 	//DrawDestructableBlocks(screen);
+}
+
+void Scenario::CheckColisions()
+{
+	for (Char* Char : *Player) {
+		for (Block* Block : *BlockList)
+		{
+			Char->IsColiding(Block);
+		}
+	}
 }
 
 Scenario::~Scenario()

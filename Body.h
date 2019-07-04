@@ -35,7 +35,7 @@ public:
 	sf::IntRect GetRectangle();
 	virtual void Animation();
 	bool DeathAnimation();
-	void Move(sf::Vector2f);
+	virtual void Move(sf::Vector2f);
 	void SetAnimationSpeed(double);
 	double GetAnimationSpeed();
 	bool IsColiding(Body *);
