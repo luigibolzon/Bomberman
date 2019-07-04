@@ -138,7 +138,7 @@ bool Body::IsColiding(Body *body)
 		bodyright = body->GetSprite().getPosition().x + body->GetSprite().getGlobalBounds().width,
 		bodybottom = body->GetSprite().getPosition().y + body->GetSprite().getGlobalBounds().height;
 
-	if ((thistop < bodybottom && thisbottom > bodytop)) {
+	if ((thistop+1 < bodybottom && thisbottom-1 > bodytop)) {
 		if (thisright < bodyleft && thisright + 1 >= bodyleft)
 			this->Colision.RIGHT = colide = true;
 
@@ -147,9 +147,9 @@ bool Body::IsColiding(Body *body)
 	}
 
 	if (thisleft < bodyright && thisright > bodyleft) {
-		if (thisbottom + 1 >= bodytop && thistop < bodytop)
+		if (thisbottom  >= bodytop && thistop < bodytop)
 			this->Colision.BOTTOM = colide = true;
-		if (thistop - 1 <= bodybottom && thisbottom > bodybottom)
+		if (thistop  <= bodybottom && thisbottom > bodybottom)
 			this->Colision.TOP = colide = true;
 	}
 	//if (this->GetSprite().getGlobalBounds().intersects(body->GetSprite().getGlobalBounds()))
