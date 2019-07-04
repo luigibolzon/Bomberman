@@ -5,7 +5,7 @@ class Char:public Body
 {
 private:
 	sf::Clock MovementClock;
-	double MovementSpeed = 20;
+	double MovementSpeed = 50;
 	int Range, BombQt, Kill, Death, Suicide, Score;
 	double Speed;
 	bool Intangible, Invulnerable;

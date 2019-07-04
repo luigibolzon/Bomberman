@@ -136,32 +136,25 @@ bool Body::IsColiding(Body *body)
 		bodyright = body->GetSprite().getPosition().x + body->GetSprite().getGlobalBounds().width,
 		bodybottom = body->GetSprite().getPosition().y + body->GetSprite().getGlobalBounds().height;
 
-	if ((thistop < bodytop && thisbottom > bodytop) || (thisbottom > bodybottom && thistop < bodybottom)) {
- 		if (thisright + 1 >= bodyleft && thisleft < bodyleft)
+	if ((thistop < bodybottom && thisbottom > bodytop)) {
+ 		if (thisright < bodyleft && thisright +1 >= bodyleft)
 			this->Colision.RIGHT = true;
-		else
-			this->Colision.RIGHT = false;
-		if (thisleft - 1 <= bodyright && thisright > bodyright)
+
+		if (thisleft > bodyright && thisleft -1 <= bodyright)
 			this->Colision.LEFT = true;
-		else
-			this->Colision.LEFT = false;
 	}
 
-	if ((thisleft < bodyleft && thisright > bodyleft) || (thisright > bodyright && thisleft < bodyright)) {
+	if (thisleft < bodyright && thisright > bodyleft) {
 		if (thisbottom + 1 >= bodytop && thistop < bodytop)
 			this->Colision.BOTTOM = true;
-		else
-			this->Colision.BOTTOM = false;
 		if (thistop - 1 <= bodybottom && thisbottom > bodybottom)
 			this->Colision.TOP = true;
-		else
-			this->Colision.TOP = false;
 	}
-
 
 	if (this->GetSprite().getGlobalBounds().intersects(body->GetSprite().getGlobalBounds()))
 		return true;
-	else return false;
+	else 
+		return false;
 }
 
 bool Body::IsExploding()

@@ -19,7 +19,7 @@ private:
 	sf::IntRect SpriteRect; //Identifies the rectangle that limits the Sprite in the texture (temporary)
 	void ChangeSprite(sf::Vector2i);
 public:
-	struct Colision {
+	struct ColisionDir {
 		bool LEFT =false, RIGHT = false, TOP = false, BOTTOM = false;
 	}Colision;
 

@@ -121,6 +121,9 @@ int Char::GetScore()
 
 void Char::Walk()
 {
+	if (this->Colision.TOP || this->Colision.BOTTOM || this->Colision.LEFT || this->Colision.RIGHT)
+		std::cout << this->Colision.TOP << " " << this->Colision.BOTTOM << " " << this->Colision.LEFT << " " << this->Colision.RIGHT << "    " << rand() << std::endl;
+
 	sf::Time Time = MovementClock.restart();
 	if (sf::Keyboard::isKeyPressed(this->MovementKeys.up) && !this->Colision.TOP)
 		this->Move(sf::Vector2f(0,-MovementSpeed*Time.asSeconds()));

@@ -95,11 +95,26 @@ void Scenario::UpdateScreen(sf::RenderWindow* screen)
 
 void Scenario::CheckColisions()
 {
+	Body::ColisionDir tmp;
 	for (Char* Char : *Player) {
+		tmp.BOTTOM = false;
+		tmp.TOP = false;
+		tmp.LEFT = false;
+		tmp.RIGHT = false;
+		Char->Colision = tmp;
 		for (Block* Block : *BlockList)
 		{
 			Char->IsColiding(Block);
+			if (Char->Colision.BOTTOM)
+				tmp.BOTTOM = true;
+			if (Char->Colision.TOP)
+				tmp.TOP = true;
+			if (Char->Colision.LEFT)
+				tmp.LEFT = true;
+			if (Char->Colision.RIGHT)
+				tmp.RIGHT = true;
 		}
+		Char->Colision = tmp;
 	}
 }
 
