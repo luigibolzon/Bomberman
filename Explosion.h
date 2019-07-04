@@ -6,8 +6,8 @@ private:
 	int Range;
 	Bomb *Origin;
 public:
-	Explosion(std::string, sf::Vector2i, sf::Vector2i, sf::Vector2f, int);
-	Explosion(std::string, sf::Vector2i, sf::Vector2i, Bomb *);
+	Explosion(sf::Texture*, sf::Vector2i, sf::Vector2i, sf::Vector2f, int);
+	Explosion(sf::Texture*, sf::Vector2i, sf::Vector2i, Bomb *);
 	~Explosion();
 };
 

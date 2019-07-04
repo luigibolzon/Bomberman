@@ -2,7 +2,7 @@
 #include "Char.h"
 
 
-Char::Char(std::string name, std::string file, sf::Vector2i spriteset, sf::Vector2i target, sf::Vector2f position):Body(name, file, spriteset, target, position)
+Char::Char(std::string name, sf::Texture* texture, sf::Vector2i spriteset, sf::Vector2i target, sf::Vector2f position):Body(name, texture, spriteset, target, position)
 {
 	Range = 4;
 	Speed = 1;
@@ -11,9 +11,9 @@ Char::Char(std::string name, std::string file, sf::Vector2i spriteset, sf::Vecto
 	Intangible = Invulnerable = false;
 }
 
-Char::Char(std::string file, sf::Vector2i spriteset, sf::Vector2i target, sf::Vector2f position):Body(file, spriteset, target, position)
+Char::Char(sf::Texture* texture, sf::Vector2i spriteset, sf::Vector2i target, sf::Vector2f position):Body(texture, spriteset, target, position)
 {
-	Char("generic", file, spriteset, target, position);
+	Char("generic", texture, spriteset, target, position);
 }
 
 Char::~Char()

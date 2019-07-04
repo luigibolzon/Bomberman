@@ -7,15 +7,15 @@
 //target
 //position
 //range
-Explosion::Explosion(std::string file, sf::Vector2i spriteset, sf::Vector2i target, sf::Vector2f position, int range):Body("Explosion", file, spriteset, target, position)
+Explosion::Explosion(sf::Texture* texture, sf::Vector2i spriteset, sf::Vector2i target, sf::Vector2f position, int range):Body("Explosion", texture, spriteset, target, position)
 {
 	this->Range = range;
 }
 
 
-Explosion::Explosion(std::string file, sf::Vector2i spriteset, sf::Vector2i target, Bomb * origin):Body("Explosion", file, spriteset, target, origin->GetPosition())
+Explosion::Explosion(sf::Texture* texture, sf::Vector2i spriteset, sf::Vector2i target, Bomb * origin):Body("Explosion", texture, spriteset, target, origin->GetPosition())
 {
-	Explosion(file, spriteset, target, origin->GetPosition(), origin->GetRange());
+	Explosion(texture, spriteset, target, origin->GetPosition(), origin->GetRange());
 }
 
 Explosion::~Explosion()

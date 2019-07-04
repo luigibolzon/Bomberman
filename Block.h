@@ -5,6 +5,11 @@ class Block : public Body
 private:
 	bool Destructible;
 public:
-	Block(bool, std::string, sf::Vector2i, sf::Vector2i, sf::Vector2f);
+	//destructible
+	//file
+	//SpriteGrid
+	//target
+	//position
+	Block(bool, sf::Texture*, sf::Vector2i, sf::Vector2i, sf::Vector2f);
 	~Block();
 };

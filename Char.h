@@ -1,11 +1,11 @@
 #pragma once
 #include"Body.h"
 
-class Char:Body
+class Char:public Body
 {
 public:
-	Char(std::string, std::string, sf::Vector2i, sf::Vector2i, sf::Vector2f);
-	Char(std::string, sf::Vector2i, sf::Vector2i, sf::Vector2f);
+	Char(std::string, sf::Texture*, sf::Vector2i, sf::Vector2i, sf::Vector2f);
+	Char(sf::Texture*, sf::Vector2i, sf::Vector2i, sf::Vector2f);
 	~Char();
 	void SetRange(int);
 	int GetRange();
