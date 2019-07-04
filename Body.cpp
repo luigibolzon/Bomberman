@@ -75,13 +75,14 @@ sf::IntRect Body::GetRectangle()
 	return this->Sprite.getTextureRect();
 }
 
-void Body::Animation()
+void Body::Animation(int line, int limit)
 {
+	CurrentSprite.y = line;
 	if (AnimationClock.getElapsedTime().asSeconds() >= AnimationSpeed) {
 		AnimationClock.restart();
 		if (AnimationFlow) {
 			CurrentSprite.x++;
-			if (CurrentSprite.x >= SpriteGrid.x-1)
+			if (CurrentSprite.x >= limit)
 				AnimationFlow = false;
 		}
 		else{
@@ -129,6 +130,7 @@ double Body::GetAnimationSpeed()
 
 bool Body::IsColiding(Body *body)
 {
+	bool colide = false;
 	float thistop = this->GetSprite().getPosition().y, thisleft = this->GetSprite().getPosition().x,
 		thisright = this->GetSprite().getPosition().x + this->GetSprite().getLocalBounds().width,
 		thisbottom = this->GetSprite().getPosition().y + this->GetSprite().getGlobalBounds().height,
@@ -137,27 +139,29 @@ bool Body::IsColiding(Body *body)
 		bodybottom = body->GetSprite().getPosition().y + body->GetSprite().getGlobalBounds().height;
 
 	if ((thistop < bodybottom && thisbottom > bodytop)) {
- 		if (thisright < bodyleft && thisright +1 >= bodyleft)
-			this->Colision.RIGHT = true;
+		if (thisright < bodyleft && thisright + 1 >= bodyleft)
+			this->Colision.RIGHT = colide = true;
 
 		if (thisleft > bodyright && thisleft -1 <= bodyright)
-			this->Colision.LEFT = true;
+			this->Colision.LEFT = colide = true;
 	}
 
 	if (thisleft < bodyright && thisright > bodyleft) {
 		if (thisbottom + 1 >= bodytop && thistop < bodytop)
-			this->Colision.BOTTOM = true;
+			this->Colision.BOTTOM = colide = true;
 		if (thistop - 1 <= bodybottom && thisbottom > bodybottom)
-			this->Colision.TOP = true;
+			this->Colision.TOP = colide = true;
 	}
-
-	if (this->GetSprite().getGlobalBounds().intersects(body->GetSprite().getGlobalBounds()))
-		return true;
-	else 
-		return false;
+	//if (this->GetSprite().getGlobalBounds().intersects(body->GetSprite().getGlobalBounds()))
+	return colide;
 }
 
 bool Body::IsExploding()
 {
 	return Exploding;
+}
+
+void Body::Explode()
+{
+	this->Exploding = true;
 }

@@ -4,6 +4,7 @@
 #include "Char.h"
 #include "Explosion.h"
 #include <list>
+#include <deque>
 
 class Scenario
 {
@@ -15,11 +16,10 @@ private:
 	sf::Vector2i Size;
 	sf::Vector2i BlockCount;
 	sf::RectangleShape Base;
-	std::list<Char*> *Player;
-	std::list<Char*> *Mobs;
-	std::list<Block*> *BlockList;
-	std::list<Block*> *DestructableBlockList;
-	std::list<Bomb*> *Bombs;
+	std::vector<Char*> *Player;
+	std::vector<Block*> *BlockList;
+	std::vector<Block*> *DestructableBlockList;
+	std::vector<Bomb*> *Bombs;
 	int blockdistance = 18;
 public:
 	sf::RectangleShape GetBase();

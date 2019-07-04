@@ -125,12 +125,20 @@ void Char::Walk()
 		std::cout << this->Colision.TOP << " " << this->Colision.BOTTOM << " " << this->Colision.LEFT << " " << this->Colision.RIGHT << "    " << rand() << std::endl;
 
 	sf::Time Time = MovementClock.restart();
-	if (sf::Keyboard::isKeyPressed(this->MovementKeys.up) && !this->Colision.TOP)
-		this->Move(sf::Vector2f(0,-MovementSpeed*Time.asSeconds()));
-	if (sf::Keyboard::isKeyPressed(this->MovementKeys.down) && !this->Colision.BOTTOM)
+	if (sf::Keyboard::isKeyPressed(this->MovementKeys.up) && !this->Colision.TOP) {
+		this->Animation(3,2);
+		this->Move(sf::Vector2f(0, -MovementSpeed * Time.asSeconds()));
+	}
+	if (sf::Keyboard::isKeyPressed(this->MovementKeys.down) && !this->Colision.BOTTOM) {
+		this->Animation(1, 2);
 		this->Move(sf::Vector2f(0, MovementSpeed * Time.asSeconds()));
-	if (sf::Keyboard::isKeyPressed(this->MovementKeys.left) && !this->Colision.LEFT)
-		this->Move(sf::Vector2f(-MovementSpeed * Time.asSeconds(),0));
-	if (sf::Keyboard::isKeyPressed(this->MovementKeys.right) && !this->Colision.RIGHT)
-		this->Move(sf::Vector2f(MovementSpeed * Time.asSeconds(),0));
+	}
+	if (sf::Keyboard::isKeyPressed(this->MovementKeys.left) && !this->Colision.LEFT) {
+		this->Animation(0, 2);
+		this->Move(sf::Vector2f(-MovementSpeed * Time.asSeconds(), 0));
+	}
+	if (sf::Keyboard::isKeyPressed(this->MovementKeys.right) && !this->Colision.RIGHT) {
+		this->Animation(2, 2);
+		this->Move(sf::Vector2f(MovementSpeed * Time.asSeconds(), 0));
+	}
 }

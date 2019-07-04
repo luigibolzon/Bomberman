@@ -9,7 +9,7 @@ class Body
 {
 private:
 	sf::Clock AnimationClock;
-	double AnimationSpeed = 1;
+	double AnimationSpeed = 0.15;
 	bool AnimationFlow = true, Exploding = false;
 	std::string Name;
 	sf::Sprite Sprite;
@@ -33,11 +33,12 @@ public:
 	sf::Sprite GetSprite();
 	sf::Vector2i GetSize();
 	sf::IntRect GetRectangle();
-	virtual void Animation();
+	virtual void Animation(int , int);
 	bool DeathAnimation();
 	virtual void Move(sf::Vector2f);
 	void SetAnimationSpeed(double);
 	double GetAnimationSpeed();
 	bool IsColiding(Body *);
 	bool IsExploding();
+	void Explode();
 };
